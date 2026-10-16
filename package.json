@@ -1,0 +1,71 @@
+{
+  "name": "csv-table-viewer",
+  "displayName": "CSV Table Viewer",
+  "description": "Open CSV and TSV files in an Excel-like grid that follows your VS Code theme.",
+  "version": "0.1.0",
+  "publisher": "local-dev",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onCustomEditor:csvTableViewer.editor",
+    "onCommand:csvTableViewer.openAsText",
+    "onCommand:csvTableViewer.openAsTable"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "csvTableViewer.editor",
+        "displayName": "CSV Table Viewer",
+        "selector": [
+          { "filenamePattern": "*.csv" },
+          { "filenamePattern": "*.tsv" }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "csvTableViewer.openAsText",
+        "title": "CSV Table Viewer: Reopen as Text"
+      },
+      {
+        "command": "csvTableViewer.openAsTable",
+        "title": "CSV Table Viewer: Open as Table"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "csvTableViewer.openAsText",
+          "when": "activeCustomEditorId == csvTableViewer.editor",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "csvTableViewer.openAsTable",
+          "when": "resourceExtname == .csv || resourceExtname == .tsv",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile",
+    "package:vsix": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "typescript": "^5.3.3"
+  }
+}
